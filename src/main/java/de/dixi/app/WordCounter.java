@@ -1,6 +1,8 @@
 package de.dixi.app;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class WordCounter {
 
@@ -11,9 +13,11 @@ public class WordCounter {
         if(text==null||text.equals("")){
             return "";
         }
-        String str1=text.replace("\n"," ").replace(",","").
-                replace(".","").toLowerCase();
-        String[] strs=str1.split("\\s+");
+        String regEx="[☀;|\uD83C\uDF19|!|\n|,:.|\uFE0F|0-9]";
+        Pattern pattern = Pattern.compile(regEx);
+        Matcher matcher = pattern.matcher(text);
+        String result = matcher.replaceAll(" ");
+        String[] strs = result.toLowerCase().split("\\s+");
 
         HashSet<String> set = new HashSet<>();
         for (String str : strs) {
@@ -43,7 +47,13 @@ public class WordCounter {
         });
         String counter="";
         for (Map.Entry<String, Integer> entry : list) {
-            counter+="00"+entry.getValue()+" "+entry.getKey()+"\n";
+            if(entry.getValue()<10){
+                counter+="00"+entry.getValue()+" "+entry.getKey()+"\n";
+            }else if(entry.getValue()<100){
+                counter+="0"+entry.getValue()+" "+entry.getKey()+"\n";
+            }else{
+                counter+=entry.getValue()+" "+entry.getKey()+"\n";
+            }
         }
         return counter;
         //throw new UnsupportedOperationException("Not implemented.");
