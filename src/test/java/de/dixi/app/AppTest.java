@@ -1,6 +1,7 @@
 package de.dixi.app;
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -22,5 +23,12 @@ class AppTest
     {
         assertTrue( true );
     }
+
+    @Test
+    void test01(){
+        String s = StringUtils.leftPad("4", 3, "0");
+        System.out.println(s);
+    }
+
 
 }
